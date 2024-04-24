@@ -17,3 +17,7 @@ Laboratory of RabbitMQ.
 **Dependencies installing**
 
 `$ composer install`
+
+## Index
+
+1. [Simple queue](./simple_queue/README.md)
