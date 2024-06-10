@@ -41,3 +41,5 @@ try {
 } catch (\Throwable $exception) {
     echo $exception->getMessage();
 }
+
+$channel->close();
