@@ -23,3 +23,4 @@ Laboratory of RabbitMQ.
 1. [Simple queue](./simple_queue/README.md)
 2. [Time-consuming task](./time_consuming_task/README.md)
 3. [Message acknowledgment](./message_acknowledgement/README.md)
+4. [Fair dispatch](./fair_dispatch/README.md)
