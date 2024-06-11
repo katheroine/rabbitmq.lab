@@ -21,3 +21,4 @@ Laboratory of RabbitMQ.
 ## Index
 
 1. [Simple queue](./simple_queue/README.md)
+1. [Time-consuming task](./time_consuming_task/README.md)
