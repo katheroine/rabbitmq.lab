@@ -4,6 +4,18 @@ Laboratory of RabbitMQ.
 
 ## Preparing
 
+**Installing `php-amqp`**
+
+```bash
+$ sudo aptitude install php-amqp
+```
+
+**Installing `rabbitmq-server`**
+
+```bash
+$ sudo aptitude install rabbitmq-server
+```
+
 **composer.json**
 
 ```composer
