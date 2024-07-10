@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
@@ -22,22 +22,16 @@ $callback = function($message) {
     print('RECEIVED: ' . $message->body . PHP_EOL);
     $delay = substr_count($message->body, '.');
     sleep($delay);
-    $message->ack();
+    $message->ack(); // CHANGE
     print('DONE' . PHP_EOL);
 };
-
-$channel->basic_qos(
-    prefetch_size: null,
-    prefetch_count: 1,
-    a_global: false
-); // CHANGE
 
 try {
     $channel->basic_consume(
         queue: QUEUE_NAME,
         consumer_tag: '',
         no_local: false,
-        no_ack: false,
+        no_ack: false, // CHANGE
         exclusive: false,
         nowait: false,
         callback: $callback

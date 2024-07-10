@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -30,17 +30,24 @@ $channel->queue_declare(
     ticket: null
 );
 
-$messageBody = implode(' ', array_slice($argv, 1));
+$taskId = 0;
 
-$message = new AMQPMessage($messageBody);
+while ($taskId < 10)
+{
+    $taskId++;
+    $messageBody = 'TASK #' . $taskId;
+    $message = new AMQPMessage($messageBody);
 
-$channel->basic_publish(
-    msg: $message,
-    exchange: '',
-    routing_key: QUEUE_NAME
-);
+    $channel->basic_publish(
+        msg: $message,
+        exchange: '',
+        routing_key: QUEUE_NAME
+    );
 
-print('SENT: ' . $messageBody . PHP_EOL);
+    print('SENT: ' . $messageBody . PHP_EOL);
+
+    sleep(1);
+}
 
 $channel->close();
 $connection->close();

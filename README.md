@@ -16,7 +16,7 @@ $ sudo aptitude install php-amqp
 $ sudo aptitude install rabbitmq-server
 ```
 
-**composer.json**
+**`composer.json`**
 
 ```composer
 {
@@ -32,7 +32,9 @@ $ sudo aptitude install rabbitmq-server
 
 ## Index
 
-1. [Simple queue](./simple_queue/README.md)
-2. [Time-consuming task](./time_consuming_task/README.md)
-3. [Message acknowledgment](./message_acknowledgement/README.md)
-4. [Fair dispatch](./fair_dispatch/README.md)
+### Lab
+
+1. [Simple queue](./lab/simple_queue/README.md)
+2. [Time-consuming task](./lab/time_consuming_task/README.md)
+3. [Message acknowledgment](./lab/message_acknowledgement/README.md)
+4. [Fair dispatch](./lab/fair_dispatch/README.md)
