@@ -1,20 +1,16 @@
-# Time-consuming task
+# Round-robin dispatching
 
-[Official documentation](https://www.rabbitmq.com/tutorials/tutorial-two-php#preparation)
+[Official documentation](https://www.rabbitmq.com/tutorials/tutorial-two-php#round-robin-dispatching)
 
-## Introduction
+One of the advantages of using a Task Queue is the ability to easily parallelise work. If we are building up a backlog of work, we can just add more workers and that way, scale easily.
 
-The main idea behind Work Queues (aka: Task Queues) is to avoid doing a resource-intensive task immediately and having to wait for it to complete. Instead we schedule the task to be done later. We encapsulate a task as a message and send it to a queue. A worker process running in the background will pop the tasks and eventually execute the job. When you run many workers the tasks will be shared between them.
-
-This concept is especially useful in web applications where it's impossible to handle a complex task during a short HTTP request window.
-
-## Preparing taks & worker
+## Preparing task & worker
 
 **task.php**
 
 ```php
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -45,17 +41,21 @@ $channel->queue_declare(
     ticket: null
 );
 
-$messageBody = implode(' ', array_slice($argv, 1));
+$number = intval($argv[1]);
 
-$message = new AMQPMessage($messageBody);
+for ($i = 1; $i <= $number; $i++) {
+    $times = rand(0, 5);
+    $messageBody = "task {$i}: " . str_repeat('.', $times);
+    $message = new AMQPMessage($messageBody);
 
-$channel->basic_publish(
-    msg: $message,
-    exchange: '',
-    routing_key: QUEUE_NAME
-);
+    $channel->basic_publish(
+        msg: $message,
+        exchange: '',
+        routing_key: QUEUE_NAME
+    );
 
-print('SENT: ' . $messageBody . PHP_EOL);
+    print('SENT: ' . $i . PHP_EOL);
+}
 
 $channel->close();
 $connection->close();
@@ -66,7 +66,7 @@ $connection->close();
 
 ```php
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
@@ -117,7 +117,13 @@ $channel->close();
 
 ## Running
 
-**Runnung worker**
+**Runnung worker 1**
+
+```bash
+$ php worker.php
+```
+
+**Runnung worker 2**
 
 ```bash
 $ php worker.php
@@ -126,13 +132,32 @@ $ php worker.php
 **Running task**
 
 ```bash
-$ php task.php Lorem ipsum.........
-SENT: Lorem ipsum.........
+$ php task.php 5
+SENT: 1
+SENT: 2
+SENT: 3
+SENT: 4
+SENT: 5
 ```
 
-**Observing worker**
+**Observing worker 1**
 
 ```bash
-RECEIVED: Lorem ipsum.........
+RECEIVED: task 1:
+DONE
+RECEIVED: task 3: ....
+DONE
+RECEIVED: task 5:
 DONE
 ```
+
+**Observing worker 2**
+
+```bash
+RECEIVED: task 2: ....
+DONE
+RECEIVED: task 4: ..
+DONE
+```
+
+By default, RabbitMQ will send each message to the next consumer, in sequence. On average every consumer will get the same number of messages. This way of distributing messages is called **round-robin**. Try this out with three or more workers.

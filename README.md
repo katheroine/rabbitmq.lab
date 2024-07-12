@@ -41,5 +41,6 @@ $ sudo aptitude install rabbitmq-server
 
 1. [Simple queue](./lab/simple_queue/README.md)
 2. [Time-consuming task](./lab/time_consuming_task/README.md)
-3. [Message acknowledgment](./lab/message_acknowledgement/README.md)
+3. [Round-robin dispatching](./lab/round_robin_dispatching/README.md)
+4. [Message acknowledgment](./lab/message_acknowledgement/README.md)
 4. [Fair dispatch](./lab/fair_dispatch/README.md)
