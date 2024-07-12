@@ -30,17 +30,21 @@ $channel->queue_declare(
     ticket: null
 );
 
-$messageBody = implode(' ', array_slice($argv, 1));
+$number = intval($argv[1]);
 
-$message = new AMQPMessage($messageBody);
+for ($i = 1; $i <= $number; $i++) {
+    $times = rand(5, 10);
+    $messageBody = "task {$i}: " . str_repeat('.', $times);
+    $message = new AMQPMessage($messageBody);
 
-$channel->basic_publish(
-    msg: $message,
-    exchange: '',
-    routing_key: QUEUE_NAME
-);
+    $channel->basic_publish(
+        msg: $message,
+        exchange: '',
+        routing_key: QUEUE_NAME
+    );
 
-print('SENT: ' . $messageBody . PHP_EOL);
+    print('SENT: ' . $i . PHP_EOL);
+}
 
 $channel->close();
 $connection->close();
