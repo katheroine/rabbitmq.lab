@@ -32,6 +32,11 @@ $ sudo aptitude install rabbitmq-server
 
 ## Index
 
+### Theory
+
+1. [Message broker](./theory/message_broker/message_broker.md)
+2. [Work queue](./theory/work_queue/work_queue.md)
+
 ### Lab
 
 1. [Simple queue](./lab/simple_queue/README.md)
