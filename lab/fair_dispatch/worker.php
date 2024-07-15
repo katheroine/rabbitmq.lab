@@ -7,7 +7,7 @@ const HOST = 'localhost';
 const PORT = '5672';
 const USERNAME = 'guest';
 const PASSWORD = 'guest';
-const QUEUE_NAME = 'some_queue';
+const QUEUE_NAME = 'other_queue';
 
 $connection = new AMQPStreamConnection(
     HOST,
@@ -52,3 +52,4 @@ try {
 }
 
 $channel->close();
+$connection->close();
