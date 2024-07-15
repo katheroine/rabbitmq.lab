@@ -22,7 +22,7 @@ $callback = function($message) {
     print('RECEIVED: ' . $message->body . PHP_EOL);
     $delay = substr_count($message->body, '.');
     sleep($delay);
-    $message->ack(); // CHANGE
+    $message->ack();
     print('DONE' . PHP_EOL);
 };
 
@@ -46,3 +46,4 @@ try {
 }
 
 $channel->close();
+$connection->close();

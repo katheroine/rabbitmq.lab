@@ -45,3 +45,4 @@ try {
 }
 
 $channel->close();
+$connection->close();

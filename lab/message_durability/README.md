@@ -130,6 +130,7 @@ try {
 }
 
 $channel->close();
+$connection->close();
 
 ```
 
@@ -299,6 +300,7 @@ try {
 }
 
 $channel->close();
+$connection->close();
 
 ```
 
