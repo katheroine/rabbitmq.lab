@@ -1,4 +1,4 @@
-# Time-consuming task
+# Work queues
 
 [Official documentation](https://www.rabbitmq.com/tutorials/tutorial-two-php#preparation)
 

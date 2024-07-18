@@ -40,7 +40,7 @@ $ sudo aptitude install rabbitmq-server
 ### Lab
 
 1. [Simple queue](./lab/simple_queue/README.md)
-2. [Time-consuming task](./lab/time_consuming_task/README.md)
+2. [Work queues](./lab/work_queues/README.md)
 3. [Round-robin dispatching](./lab/round_robin_dispatching/README.md)
 4. [Message acknowledgment](./lab/message_acknowledgement/README.md)
 5. [Message durability](./lab/message_durability/README.md)
