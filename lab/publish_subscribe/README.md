@@ -133,7 +133,11 @@ $channel->basic_qos(
 
 $channel->queue_bind(
     queue: $queue_name, // CHANGE
-    exchange: EXCHANGE_NAME
+    exchange: EXCHANGE_NAME,
+    routing_key: '',
+    nowait: false,
+    arguments: null,
+    ticket: null
 );
 
 try {
