@@ -47,3 +47,4 @@ $ sudo aptitude install rabbitmq-server
 6. [Fair dispatch](./lab/fair_dispatch/README.md)
 7. [Fanout exchange](./lab/fanout_exchange/README.md)
 8. [Publish-subscribe](./lab/publish_subscribe/README.md)
+9. [Direct exchange](./lab/direct_exchange/README.md)
