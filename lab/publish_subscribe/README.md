@@ -22,7 +22,7 @@ When the method returns, the $queue_name variable contains a random queue name g
 
 When the connection that declared it closes, the queue will be deleted because it is declared as exclusive. You can learn more about the exclusive flag and other queue properties in the guide on queues.
 
-## Preparing emiter & receiver
+## Preparing emiter & collector
 
 **emitter.php**
 
