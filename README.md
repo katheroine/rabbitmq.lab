@@ -45,5 +45,5 @@ $ sudo aptitude install rabbitmq-server
 4. [Message acknowledgment](./lab/message_acknowledgement/README.md)
 5. [Message durability](./lab/message_durability/README.md)
 6. [Fair dispatch](./lab/fair_dispatch/README.md)
-7. [Exchanges](./lab/exchanges/README.md)
+7. [Fanout exchange](./lab/fanout_exchange/README.md)
 8. [Publish-subscribe](./lab/publish_subscribe/README.md)

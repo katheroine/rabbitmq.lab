@@ -1,4 +1,4 @@
-# Exchanges
+# Fanout exchange
 
 [Official documentation](https://www.rabbitmq.com/tutorials/tutorial-three-php#exchanges)
 
