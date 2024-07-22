@@ -8,12 +8,8 @@ const PORT = '5672';
 const USERNAME = 'guest';
 const PASSWORD = 'guest';
 const EXCHANGE_NAME = 'another_exchange';
-const EXCHANGE_TYPE = 'direct';
-const SEVERITIES = [
-    'info',
-    'warning',
-    'error',
-];
+const EXCHANGE_TYPE = 'direct'; // CHANGE
+const BINDING_KEY = 'some_key'; // CHANGE
 
 $connection = new AMQPStreamConnection(
     HOST,
@@ -61,20 +57,11 @@ $channel->basic_qos(
 $channel->queue_bind(
     queue: $queue_name,
     exchange: EXCHANGE_NAME,
-    routing_key: SEVERITIES[1],
+    routing_key: BINDING_KEY, // CHANGE
     nowait: false,
     arguments: null,
     ticket: null
-); // CHANGE
-
-$channel->queue_bind(
-    queue: $queue_name,
-    exchange: EXCHANGE_NAME,
-    routing_key: SEVERITIES[2],
-    nowait: false,
-    arguments: null,
-    ticket: null
-); // CHANGE
+);
 
 try {
     $channel->basic_consume(

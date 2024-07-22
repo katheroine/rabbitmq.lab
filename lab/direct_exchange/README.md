@@ -45,7 +45,8 @@ const PORT = '5672';
 const USERNAME = 'guest';
 const PASSWORD = 'guest';
 const EXCHANGE_NAME = 'another_exchange';
-const EXCHANGE_TYPE = 'direct';
+const EXCHANGE_TYPE = 'direct'; // CHANGE
+const BINDING_KEY = 'some_key'; // CHANGE
 const SEVERITIES = [
     'info',
     'warning',
@@ -76,8 +77,8 @@ $channel->exchange_declare(
 $number = intval($argv[1]);
 
 for ($i = 1; $i <= $number; $i++) {
-    $severity = SEVERITIES[rand(0, 2)]; // CHANGE
-    $messageBody = "emitting {$i}: " . $severity; // CHANGE
+    $severity = SEVERITIES[rand(0, 2)];
+    $messageBody = "emitting {$i}: " . $severity;
     $message = new AMQPMessage(
         $messageBody,
         ['delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT]
@@ -86,10 +87,10 @@ for ($i = 1; $i <= $number; $i++) {
     $channel->basic_publish(
         msg: $message,
         exchange: EXCHANGE_NAME,
-        routing_key: $severity // CHANGE
+        routing_key: BINDING_KEY, // CHANGE
     );
 
-    print('SENT: ' . $i . ' [' . $severity . ']' . PHP_EOL); // CHANGE
+    print('SENT: ' . $i . ' [' . $severity . ']' . PHP_EOL);
 }
 
 $channel->close();
@@ -110,12 +111,8 @@ const PORT = '5672';
 const USERNAME = 'guest';
 const PASSWORD = 'guest';
 const EXCHANGE_NAME = 'another_exchange';
-const EXCHANGE_TYPE = 'direct';
-const SEVERITIES = [
-    'info',
-    'warning',
-    'error',
-];
+const EXCHANGE_TYPE = 'direct'; // CHANGE
+const BINDING_KEY = 'some_key'; // CHANGE
 
 $connection = new AMQPStreamConnection(
     HOST,
@@ -150,7 +147,7 @@ list($queue_name, , ) = $channel->queue_declare(
 );
 
 $callback = function($message) {
-    print('RECEIVED: [' . $message->getRoutingKey() . '] ' . $message->getBody() . PHP_EOL); // CHANGE
+    print('RECEIVED: [' . $message->getRoutingKey() . '] ' . $message->getBody() . PHP_EOL);
     $message->ack();
 };
 
@@ -163,20 +160,11 @@ $channel->basic_qos(
 $channel->queue_bind(
     queue: $queue_name,
     exchange: EXCHANGE_NAME,
-    routing_key: SEVERITIES[1],
+    routing_key: BINDING_KEY, // CHANGE
     nowait: false,
     arguments: null,
     ticket: null
-); // CHANGE
-
-$channel->queue_bind(
-    queue: $queue_name,
-    exchange: EXCHANGE_NAME,
-    routing_key: SEVERITIES[2],
-    nowait: false,
-    arguments: null,
-    ticket: null
-); // CHANGE
+);
 
 try {
     $channel->basic_consume(
@@ -213,28 +201,20 @@ $ php collector.php
 **Running emitter**
 
 ```bash
-$ $ php emitter.php 10
-SENT: 1 [error]
-SENT: 2 [error]
-SENT: 3 [warning]
+$ php emitter.php 5
+SENT: 1 [warning]
+SENT: 2 [info]
+SENT: 3 [error]
 SENT: 4 [info]
-SENT: 5 [warning]
-SENT: 6 [info]
-SENT: 7 [warning]
-SENT: 8 [error]
-SENT: 9 [info]
-SENT: 10 [warning]
+SENT: 5 [info]
 ```
 
 **Observing receiver**
 
 ```bash
-$ php collector.php
-RECEIVED: [error] emitting 1: error
-RECEIVED: [error] emitting 2: error
-RECEIVED: [warning] emitting 3: warning
-RECEIVED: [warning] emitting 5: warning
-RECEIVED: [warning] emitting 7: warning
-RECEIVED: [error] emitting 8: error
-RECEIVED: [warning] emitting 10: warning
+RECEIVED: [] emitting 1: warning
+RECEIVED: [] emitting 2: info
+RECEIVED: [] emitting 3: error
+RECEIVED: [] emitting 4: info
+RECEIVED: [] emitting 5: info
 ```

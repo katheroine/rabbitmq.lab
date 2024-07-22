@@ -9,7 +9,8 @@ const PORT = '5672';
 const USERNAME = 'guest';
 const PASSWORD = 'guest';
 const EXCHANGE_NAME = 'another_exchange';
-const EXCHANGE_TYPE = 'direct';
+const EXCHANGE_TYPE = 'direct'; // CHANGE
+const BINDING_KEY = 'some_key'; // CHANGE
 const SEVERITIES = [
     'info',
     'warning',
@@ -40,8 +41,8 @@ $channel->exchange_declare(
 $number = intval($argv[1]);
 
 for ($i = 1; $i <= $number; $i++) {
-    $severity = SEVERITIES[rand(0, 2)]; // CHANGE
-    $messageBody = "emitting {$i}: " . $severity; // CHANGE
+    $severity = SEVERITIES[rand(0, 2)];
+    $messageBody = "emitting {$i}: " . $severity;
     $message = new AMQPMessage(
         $messageBody,
         ['delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT]
@@ -50,10 +51,10 @@ for ($i = 1; $i <= $number; $i++) {
     $channel->basic_publish(
         msg: $message,
         exchange: EXCHANGE_NAME,
-        routing_key: $severity // CHANGE
+        routing_key: BINDING_KEY, // CHANGE
     );
 
-    print('SENT: ' . $i . ' [' . $severity . ']' . PHP_EOL); // CHANGE
+    print('SENT: ' . $i . ' [' . $severity . ']' . PHP_EOL);
 }
 
 $channel->close();
