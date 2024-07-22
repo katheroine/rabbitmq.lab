@@ -48,3 +48,4 @@ $ sudo aptitude install rabbitmq-server
 7. [Fanout exchange](./lab/fanout_exchange/README.md)
 8. [Publish-subscribe](./lab/publish_subscribe/README.md)
 9. [Direct exchange](./lab/direct_exchange/README.md)
+10. [Routing](./lab/routing/README.md)
