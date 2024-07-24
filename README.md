@@ -50,3 +50,4 @@ $ sudo aptitude install rabbitmq-server
 9. [Direct exchange](./lab/direct_exchange/README.md)
 10. [Routing](./lab/routing/README.md)
 11. [Topic exchange](./lab/topic_exchange/README.md)
+12. [Remote procedure call](./lab/rpc/README.md)
